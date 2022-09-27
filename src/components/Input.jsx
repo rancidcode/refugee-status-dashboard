@@ -1,16 +1,15 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 import { addCountry, addYear } from "../redux/selectedOption";
+import { UserContext } from "../App";
 import years from "../assets/data/years";
 
 function Input({ mode }) {
   const selected = useSelector((state) => state.selectedOptions);
 
-  const [countries, setCountries] = React.useState([]);
-
   const dispatch = useDispatch();
+  const countries = React.useContext(UserContext);
 
   function countryOnChangeHandler(event) {
     dispatch(addCountry({ country: event.target.value }));
@@ -18,22 +17,7 @@ function Input({ mode }) {
   function yearOnChangeHandler(event) {
     dispatch(addYear({ year: event.target.value }));
   }
-
-  const getData = async () => {
-    const countryURL = `http://localhost:5000/countries`;
-    // const yearURL = `http://localhost:3001/years`;
-
-    // const [countryDataResponse, yearDataResponse] = await Promise.all([
-    //   axios.get(countryURL),
-    //   axios.get(yearURL),
-    // ]);
-    const countryDataResponse = await axios(countryURL);
-    setCountries(countryDataResponse.data);
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
+  if (!countries) return null;
 
   return (
     <>

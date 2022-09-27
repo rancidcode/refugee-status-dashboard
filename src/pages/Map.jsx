@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import {
   ComposableMap,
   Geographies,
@@ -11,25 +10,17 @@ import {
 import { scaleLinear } from "d3-scale";
 import Toggle from "../components/Toggle";
 
+import { UserContext } from "../App";
+
 function Map() {
+  const countries = React.useContext(UserContext);
+
   const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/v2/topojson-maps/world-110m.json";
 
   const colorScale = scaleLinear()
     .domain([0, 3700000])
     .range(["#bbcfda", "#0F00FF"]);
-
-  const [countries, setCountries] = React.useState([]);
-  const getCountries = async () => {
-    const countryAPI = `http://localhost:5000/countries`;
-
-    const response = await axios.get(countryAPI);
-    setCountries(response.data);
-  };
-
-  React.useEffect(() => {
-    getCountries();
-  }, []);
 
   return (
     <div className="mainContainer">
