@@ -13,7 +13,7 @@ import Toggle from "../components/Toggle";
 
 function Map() {
   const geoUrl =
-    "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+    "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/v2/topojson-maps/world-110m.json";
 
   const colorScale = scaleLinear()
     .domain([0, 3700000])
@@ -21,7 +21,7 @@ function Map() {
 
   const [countries, setCountries] = React.useState([]);
   const getCountries = async () => {
-    const countryAPI = `http://localhost:3001/countries`;
+    const countryAPI = `http://localhost:5000/countries`;
 
     const response = await axios.get(countryAPI);
     setCountries(response.data);
